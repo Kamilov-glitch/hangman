@@ -7,6 +7,8 @@ class Player
   def initialize(name)
     @name = name
     @player_choice_arr = []
+    @correct_guesses = []
+    @wrong_guesses = 0
   end
 
   def file_reader(txt)
@@ -15,7 +17,7 @@ class Player
   end
 
   def choose_word
-    @word = @lines[rand(0..(@lines.length - 1))]
+    @word = @lines[rand(0..(@lines.length - 1))].chomp
     choose_word if @word.length < 5 || @word.length > 12
   end
 
@@ -23,8 +25,23 @@ class Player
     @letter = gets.chomp
     if @letter.match?(/[[:alpha:]]/) && @letter.length == 1 && !@player_choice_arr.include?(@letter)
       @player_choice_arr.push(@letter)
+      if @word.split("").include?(@letter)
+        @correct_guesses.push(@letter)
+      else
+        @wrong_guesses += 1
+      end 
     else
       player_choice
+    end
+  end
+
+  def display
+    @word.split("").each do |l|
+      if @correct_guesses.include?(l)
+        print l
+      else
+        print ' _ '
+      end
     end
   end
 
@@ -33,6 +50,7 @@ end
 samir = Player.new("Samir")
 samir.file_reader("dictionary.txt")
 samir.choose_word
-puts "#{samir.name} #{samir.word}"
+p "#{samir.name} #{samir.word} #{samir.word.length}"
 samir.player_choice
-puts samir.letter
+p samir.letter
+samir.display
