@@ -117,6 +117,7 @@ class Player < Serialization
         load(@name, @word, @player_choice_arr, @correct_guesses, @wrong_guesses)
       else
         puts "You haven't saved any progress so far."
+      end
     else
       puts "Enter 1 or 2"
       start_of_game
