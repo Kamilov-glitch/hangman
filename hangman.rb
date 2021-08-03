@@ -113,7 +113,10 @@ class Player < Serialization
     if answer == '1'
       choose_word
     elsif answer == '2'
-      load(@name, @word, @player_choice_arr, @correct_guesses, @wrong_guesses)
+      if File.exists?('save_file.json')
+        load(@name, @word, @player_choice_arr, @correct_guesses, @wrong_guesses)
+      else
+        puts "You haven't saved any progress so far."
     else
       puts "Enter 1 or 2"
       start_of_game
